@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "HoneyBlot";
+    src: url("../assets/fonts/honeyblot_caps.otf");
+  }
+
+  @font-face {
+    font-family: "HoneyPigeon";
+    src: url("../assets/fonts/HoneyPigeon.ttf");
+  }
+
+  @font-face {
+    font-family: "Nunito";
+    src: url("../assets/fonts/Nunito-VariableFont_wght.ttf");
+  }
+  @font-face {
+    font-family: "Nunito";
+    src: url("../assets/fonts/Nunito-Italic-VariableFont_wght.ttf");
+    font-style: italic;
+  }
+
+  @font-face {
+    font-family: "Playpen";
+    src: url("../assets/fonts/PlaypenSans-VariableFont_wght.ttf");
+  }
+}
