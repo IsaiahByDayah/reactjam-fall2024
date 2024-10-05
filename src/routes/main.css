@@ -35,6 +35,18 @@
 
 @layer components {
   .btn {
-    @apply rounded-xl border px-4 py-2 text-current hover:bg-[color-mix(in_srgb,_transparent,_currentColor_10%)];
+    @apply rounded-xl border border-current bg-transparent px-4 py-2 font-bold text-current hover:bg-[color-mix(in_srgb,_transparent,_currentColor_10%)] disabled:cursor-not-allowed disabled:text-[color-mix(in_srgb,_transparent,_currentColor_50%)] disabled:hover:bg-transparent;
+  }
+
+  .btn-contained {
+    @apply border-none bg-[var(--btn-color-contrast)] text-[var(--btn-color)] shadow-md [--btn-color-contrast:white] [--btn-color:black] hover:bg-[color-mix(in_srgb,_var(--btn-color-contrast),_var(--btn-color)_10%)] disabled:bg-[color-mix(in_srgb,_transparent,_currentColor_50%)] disabled:hover:bg-[color-mix(in_srgb,_transparent,_currentColor_50%)];
+  }
+
+  .btn-contained-invert {
+    @apply bg-[var(--btn-color)] text-[var(--btn-color-contrast)] hover:bg-[color-mix(in_srgb,_var(--btn-color),_var(--btn-color-contrast)_10%)];
+  }
+
+  .btn-icon {
+    @apply flex items-center justify-center p-2;
   }
 }
