@@ -35,6 +35,6 @@
 
 @layer components {
   .btn {
-    @apply border py-2 px-4 rounded-xl text-current;
+    @apply rounded-xl border px-4 py-2 text-current hover:bg-[color-mix(in_srgb,_transparent,_currentColor_10%)];
   }
 }
