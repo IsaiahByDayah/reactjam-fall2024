@@ -16,11 +16,8 @@ function LoginIndex() {
       </div>
       <div className="flex flex-row gap-2">
         <div className="flex flex-col items-center gap-2">
-          <Link
-            className="relative flex size-20 items-center justify-center rounded border border-current"
-            to="/login/new-user"
-          >
-            <HiPlus className="text-4xl" />
+          <Link className="btn btn-icon size-20" to="/login/new-user">
+            <HiPlus className="size-6" />
           </Link>
           <p>New Hire</p>
         </div>
