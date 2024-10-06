@@ -33,7 +33,7 @@ function NewHireForm() {
   const firstName = useWatch({ control, name: "firstName" })
   const lastName = useWatch({ control, name: "lastName" })
 
-  const email = `${firstName?.[0] ?? ""}${lastName}`.toLowerCase()
+  const employeeId = `${firstName?.[0] ?? ""}${lastName}`.toLowerCase()
 
   const onSubmit = (data: NewHireSchema) => {
     console.log(data)
@@ -88,7 +88,7 @@ function NewHireForm() {
             Email
           </label>
           <p className="mt-2">
-            <span className="font-bold sm:text-sm">{email}</span>
+            <span className="font-bold sm:text-sm">{employeeId}</span>
             <span className="text-white/80 sm:text-sm">@muysnacks.com</span>
           </p>
         </div>
