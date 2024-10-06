@@ -4,6 +4,8 @@ import { useForm, useWatch } from "react-hook-form"
 import { HiChevronLeft } from "react-icons/hi"
 import { z } from "zod"
 
+import { parseEmployeeId } from "@/utils/users"
+
 export const Route = createFileRoute("/login/new-user")({
   component: NewHireForm,
 })
@@ -30,10 +32,8 @@ function NewHireForm() {
     resolver: zodResolver(newHireSchema),
   })
 
-  const firstName = useWatch({ control, name: "firstName" })
-  const lastName = useWatch({ control, name: "lastName" })
-
-  const employeeId = `${firstName?.[0] ?? ""}${lastName}`.toLowerCase()
+  const newHire = useWatch({ control })
+  const employeeId = parseEmployeeId(newHire)
 
   const onSubmit = (data: NewHireSchema) => {
     console.log(data)
