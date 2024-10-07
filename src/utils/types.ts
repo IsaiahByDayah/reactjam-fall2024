@@ -33,8 +33,8 @@ export interface IEmailReply {
 export interface IEmailData {
   uid: string
   fromId: string
-  subject: string
-  preview: string
+  subject: ReactNode
+  preview: ReactNode
   message: ReactNode
   readTimeMin: number
 }

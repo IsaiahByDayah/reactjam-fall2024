@@ -8,8 +8,8 @@ export const currentTimeAtom = atom<ITime>({
 })
 
 export const currentDateAtom = atom<IDate>({
-  month: 0,
-  day: 0,
+  month: 7,
+  day: 14,
 })
 
 export const currentDateTimeAtom = atom<IDateTime>((get) => ({

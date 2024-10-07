@@ -1,5 +1,6 @@
 import clsx from "clsx"
 import { useAtom, useAtomValue, useSetAtom } from "jotai"
+import { HiReply } from "react-icons/hi"
 
 import {
   currentEmailIdAtom,
@@ -29,6 +30,7 @@ export const EmailFeed = ({ className }: EmailFeedProps) => {
     >
       {inbox.map((entry) => {
         const email = lookupEmail(entry.emailId)
+        const isRepliedTo = Boolean(entry?.replyId)
 
         if (!email) {
           return null
@@ -55,6 +57,9 @@ export const EmailFeed = ({ className }: EmailFeedProps) => {
           >
             {!entry.isRead && (
               <div className="absolute left-3 top-[calc(theme(spacing[7])+theme(spacing[0.5]))] size-2.5 rounded-full bg-red-700" />
+            )}
+            {isRepliedTo && (
+              <HiReply className="absolute left-2 top-[calc(theme(spacing[6])+theme(spacing[0.5]))] size-4 text-gray-500" />
             )}
             <div className="flex items-baseline justify-between gap-x-4">
               <p

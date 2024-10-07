@@ -7,10 +7,17 @@ import {
   recieveEmailAtom,
 } from "@/atoms/inbox"
 import {
+  ART_GALLERY_EMAIL,
+  ART_REQUESTS_EMAIL,
+  CONTENT_SYNC_EMAIL,
+  ENERGY_BLAST_EMAIL,
+  INSPO_EMAIL,
   LUNCH_REQUEST_EMAIL,
+  MOVIE_SCREENING_EMAIL,
   PETS_EMAIL,
   WELCOME_EMAIL,
 } from "@/utils/data/emails"
+import { REF_SHEET_EMAIL } from "@/utils/data/emails/ref-sheet"
 import { IPlayer } from "@/utils/types"
 
 const PLAYER_ROLE = "Social & Influencer Marketing Associate"
@@ -53,6 +60,55 @@ export const createPlayerAtom = atom(
       recievedAt: {
         hr: 9,
         min: 33,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: REF_SHEET_EMAIL.uid,
+      recievedAt: {
+        hr: 11,
+        min: 7,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: INSPO_EMAIL.uid,
+      recievedAt: {
+        hr: 13,
+        min: 44,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: CONTENT_SYNC_EMAIL.uid,
+      recievedAt: {
+        hr: 14,
+        min: 8,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: MOVIE_SCREENING_EMAIL.uid,
+      recievedAt: {
+        hr: 14,
+        min: 11,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: ART_GALLERY_EMAIL.uid,
+      recievedAt: {
+        hr: 14,
+        min: 28,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: ENERGY_BLAST_EMAIL.uid,
+      recievedAt: {
+        hr: 15,
+        min: 0,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: ART_REQUESTS_EMAIL.uid,
+      recievedAt: {
+        hr: 15,
+        min: 29,
       },
     })
   },

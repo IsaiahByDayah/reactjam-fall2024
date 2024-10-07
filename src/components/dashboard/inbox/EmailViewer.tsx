@@ -41,7 +41,12 @@ export const EmailViewer = ({ className }: EmailViewerProps) => {
   }
 
   return (
-    <div className={clsx("mx-auto flex flex-col gap-10 px-4 py-10", className)}>
+    <div
+      className={clsx(
+        "mx-auto flex w-full max-w-2xl flex-col gap-10 overflow-y-auto px-4 py-10",
+        className,
+      )}
+    >
       <div className="prose">{currentEmail?.message}</div>
       <ul className="flex flex-col gap-2 border px-2 py-4">
         {replies.map((reply) => {
