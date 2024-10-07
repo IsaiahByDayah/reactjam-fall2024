@@ -12,14 +12,21 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as LoginImport } from './routes/login'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as IndexImport } from './routes/index'
 import { Route as LoginIndexImport } from './routes/login.index'
 import { Route as LoginNewUserImport } from './routes/login.new-user'
+import { Route as DashboardInboxImport } from './routes/dashboard.inbox'
 
 // Create/Update Routes
 
 const LoginRoute = LoginImport.update({
   path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardRoute = DashboardImport.update({
+  path: '/dashboard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -38,6 +45,11 @@ const LoginNewUserRoute = LoginNewUserImport.update({
   getParentRoute: () => LoginRoute,
 } as any)
 
+const DashboardInboxRoute = DashboardInboxImport.update({
+  path: '/inbox',
+  getParentRoute: () => DashboardRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -49,12 +61,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
+    }
+    '/dashboard/inbox': {
+      id: '/dashboard/inbox'
+      path: '/inbox'
+      fullPath: '/dashboard/inbox'
+      preLoaderRoute: typeof DashboardInboxImport
+      parentRoute: typeof DashboardImport
     }
     '/login/new-user': {
       id: '/login/new-user'
@@ -75,6 +101,18 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface DashboardRouteChildren {
+  DashboardInboxRoute: typeof DashboardInboxRoute
+}
+
+const DashboardRouteChildren: DashboardRouteChildren = {
+  DashboardInboxRoute: DashboardInboxRoute,
+}
+
+const DashboardRouteWithChildren = DashboardRoute._addFileChildren(
+  DashboardRouteChildren,
+)
+
 interface LoginRouteChildren {
   LoginNewUserRoute: typeof LoginNewUserRoute
   LoginIndexRoute: typeof LoginIndexRoute
@@ -89,13 +127,17 @@ const LoginRouteWithChildren = LoginRoute._addFileChildren(LoginRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRoute
   '/login/new-user': typeof LoginNewUserRoute
   '/login/': typeof LoginIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRoute
   '/login/new-user': typeof LoginNewUserRoute
   '/login': typeof LoginIndexRoute
 }
@@ -103,27 +145,44 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRouteWithChildren
   '/login': typeof LoginRouteWithChildren
+  '/dashboard/inbox': typeof DashboardInboxRoute
   '/login/new-user': typeof LoginNewUserRoute
   '/login/': typeof LoginIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/login/new-user' | '/login/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/dashboard/inbox'
+    | '/login/new-user'
+    | '/login/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login/new-user' | '/login'
-  id: '__root__' | '/' | '/login' | '/login/new-user' | '/login/'
+  to: '/' | '/dashboard' | '/dashboard/inbox' | '/login/new-user' | '/login'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/login'
+    | '/dashboard/inbox'
+    | '/login/new-user'
+    | '/login/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRouteWithChildren
   LoginRoute: typeof LoginRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRouteWithChildren,
   LoginRoute: LoginRouteWithChildren,
 }
 
@@ -140,11 +199,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/dashboard",
         "/login"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/dashboard": {
+      "filePath": "dashboard.tsx",
+      "children": [
+        "/dashboard/inbox"
+      ]
     },
     "/login": {
       "filePath": "login.tsx",
@@ -152,6 +218,10 @@ export const routeTree = rootRoute
         "/login/new-user",
         "/login/"
       ]
+    },
+    "/dashboard/inbox": {
+      "filePath": "dashboard.inbox.tsx",
+      "parent": "/dashboard"
     },
     "/login/new-user": {
       "filePath": "login.new-user.tsx",

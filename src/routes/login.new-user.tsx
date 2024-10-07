@@ -1,10 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router"
+import { useSetAtom } from "jotai"
 import { useForm, useWatch } from "react-hook-form"
 import { HiChevronLeft } from "react-icons/hi"
 import { z } from "zod"
 
-import { parseEmployeeId } from "@/utils/users"
+import { createPlayerAtom } from "@/atoms/player"
+import { parseEmployeeId } from "@/utils/employee"
 
 export const Route = createFileRoute("/login/new-user")({
   component: NewHireForm,
@@ -18,6 +20,9 @@ const newHireSchema = z.object({
 type NewHireSchema = z.infer<typeof newHireSchema>
 
 function NewHireForm() {
+  const addNewPlayer = useSetAtom(createPlayerAtom)
+  const router = useRouter()
+
   const {
     control,
     formState: { errors, isValid },
@@ -37,6 +42,8 @@ function NewHireForm() {
 
   const onSubmit = (data: NewHireSchema) => {
     console.log(data)
+    addNewPlayer(data)
+    router.navigate({ to: "/dashboard/inbox" })
   }
 
   return (
