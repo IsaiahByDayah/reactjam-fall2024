@@ -12,25 +12,26 @@ export interface ITime {
 
 export type IDateTime = IDate & ITime
 
-export interface IEmployee {
+export interface IContact {
   uid: string
   firstName: string
   lastName: string
   role: string
+  isCoworker: boolean
 }
 
-export interface IPlayer extends IEmployee {}
+export interface IPlayer extends IContact {}
 
 export interface IEmailReply {
   uid: string
   emailId: string
-  message: string
+  message: ReactNode
   replyTimeMin: number
 }
 
 export interface IEmailData {
   uid: string
-  fromId: string // EmployeeId
+  fromId: string
   subject: string
   preview: string
   message: ReactNode
@@ -41,5 +42,6 @@ export interface IInboxEmail {
   emailId: string
   recievedAt: IDateTime
   isRead: boolean
+  isArchived: boolean
   replyId: null | string
 }

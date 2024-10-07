@@ -3,12 +3,11 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai"
 
 import {
   currentEmailIdAtom,
-  currentPlayerDailyInboxAtom,
+  currentPlayerViewableInboxAtom,
   selectEmailAtom,
 } from "@/atoms/inbox"
-import { currentTimeAtom } from "@/atoms/time"
+import { lookupContact } from "@/utils/data/contacts"
 import { lookupEmail } from "@/utils/data/emails"
-import { lookupEmployee } from "@/utils/data/employees"
 import { displayTime } from "@/utils/time"
 
 interface EmailFeedProps {
@@ -16,8 +15,7 @@ interface EmailFeedProps {
 }
 
 export const EmailFeed = ({ className }: EmailFeedProps) => {
-  const inbox = useAtomValue(currentPlayerDailyInboxAtom)
-  const currentTime = useAtomValue(currentTimeAtom)
+  const inbox = useAtomValue(currentPlayerViewableInboxAtom)
   const selectEmail = useSetAtom(selectEmailAtom)
   const [currentEmailId, setCurrentEmailId] = useAtom(currentEmailIdAtom)
 
@@ -36,8 +34,8 @@ export const EmailFeed = ({ className }: EmailFeedProps) => {
           return null
         }
 
-        const fromEmployee = lookupEmployee(email.fromId)
-        if (!fromEmployee) {
+        const fromContact = lookupContact(email.fromId)
+        if (!fromContact) {
           return null
         }
 
@@ -64,7 +62,7 @@ export const EmailFeed = ({ className }: EmailFeedProps) => {
                   "overflow-x-hidden break-words font-semibold leading-6 text-gray-900",
                 )}
               >
-                {fromEmployee.firstName} {fromEmployee.lastName}
+                {fromContact.firstName} {fromContact.lastName}
               </p>
               <p className="flex-none text-xs text-gray-600">
                 {displayTime(entry.recievedAt)}

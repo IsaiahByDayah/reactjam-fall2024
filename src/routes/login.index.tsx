@@ -47,9 +47,12 @@ function LoginIndex() {
         <h1 className="font-playpen text-4xl font-black">Muy Snacks</h1>
         <p className="font-playpen text-sm italic">{slogan}</p>
       </div>
-      <div className="flex flex-row gap-6">
+      <div className="flex flex-row justify-start gap-6">
         {allPlayers.map((player) => (
-          <div key={player.uid} className="flex flex-col items-center gap-2">
+          <div
+            key={player.uid}
+            className="group flex flex-col items-center gap-2"
+          >
             <button
               className="btn btn-icon btn-contained size-20"
               onClick={() => loadPlayer(player)}
@@ -60,7 +63,7 @@ function LoginIndex() {
               {player.firstName} {player.lastName}
             </p>
             <button
-              className="btn btn-icon rounded-full p-1"
+              className="btn btn-icon rounded-full p-1 opacity-0 group-hover:opacity-100"
               onClick={() => deletePlayer(player.uid)}
             >
               <HiXMark className="size-4" />

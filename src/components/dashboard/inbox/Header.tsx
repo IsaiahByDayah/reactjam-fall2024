@@ -47,8 +47,11 @@ export const Header = ({ className }: HeaderProps) => {
             className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
           />
         </form> */}
-        <div className="relative flex flex-1">
-          {displayDate(currentDateTime)} - {displayTime(currentDateTime)}
+        <div className="relative flex flex-1 items-center gap-4">
+          <span className="text-2xl font-black uppercase">
+            {displayDate(currentDateTime)}
+          </span>{" "}
+          <span>{displayTime(currentDateTime)}</span>
         </div>
 
         <div className="flex items-center gap-x-4 lg:gap-x-6">

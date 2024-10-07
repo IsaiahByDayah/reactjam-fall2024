@@ -2,12 +2,10 @@ import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
 import { currentPlayerIdAtom } from "@/atoms/player"
-import {
-  advanceTimeAtom,
-  currentDateAtom,
-  currentDateTimeAtom,
-} from "@/atoms/time"
+import { advanceTimeAtom, currentDateTimeAtom } from "@/atoms/time"
 import { lookupEmail } from "@/utils/data/emails"
+import { lookupReply } from "@/utils/data/replies"
+import { dateTimeIsBefore } from "@/utils/time"
 import { IDateTime, IInboxEmail } from "@/utils/types"
 
 export const playerInboxesAtom = atomWithStorage<{
@@ -69,6 +67,7 @@ export const recieveEmailAtom = atom(
     const newEmail: IInboxEmail = {
       emailId,
       isRead: false,
+      isArchived: false,
       recievedAt: {
         ...currentDateTime,
         ...recievedAt,
@@ -86,11 +85,12 @@ export const recieveEmailAtom = atom(
   },
 )
 
-export const currentPlayerDailyInboxAtom = atom((get) => {
-  const { month, day } = get(currentDateAtom)
+export const currentPlayerViewableInboxAtom = atom((get) => {
+  const currentDateTime = get(currentDateTimeAtom)
   const inbox = get(currentPlayerInboxAtom)
   return inbox.filter(
-    (entry) => entry.recievedAt.month === month && entry.recievedAt.day === day,
+    (entry) =>
+      dateTimeIsBefore(entry.recievedAt, currentDateTime) && !entry.isArchived,
   )
 })
 
@@ -130,7 +130,49 @@ export const selectEmailAtom = atom(null, (get, set, emailId: string) => {
   }
 })
 
+export const currentEmailEntryAtom = atom((get) => {
+  const currentEmailId = get(currentEmailIdAtom)
+  const currentPlayerInbox = get(currentPlayerInboxAtom)
+  return currentPlayerInbox.find((entry) => entry.emailId === currentEmailId)
+})
+
 export const currentEmailAtom = atom((get) => {
   const currentEmailId = get(currentEmailIdAtom)
   return lookupEmail(currentEmailId)
+})
+
+export const sendReplyAtom = atom(null, (get, set, replyId: string) => {
+  const currentPlayerId = get(currentPlayerIdAtom)
+  if (!currentPlayerId) {
+    return
+  }
+
+  const playerInbox = get(playerInboxesAtom)[currentPlayerId]
+  if (!playerInbox) {
+    return
+  }
+
+  const reply = lookupReply(replyId)
+  if (!reply) {
+    return
+  }
+
+  const existingEntry = playerInbox.find(
+    (entry) => entry.emailId === reply.emailId,
+  )
+  if (existingEntry?.replyId) {
+    return
+  }
+
+  set(playerInboxesAtom, (playerInboxes) => ({
+    ...playerInboxes,
+    [currentPlayerId]: playerInbox.map((entry) => {
+      if (entry.emailId === reply.emailId) {
+        return { ...entry, replyId }
+      }
+
+      return entry
+    }),
+  }))
+  set(advanceTimeAtom, { min: reply.replyTimeMin })
 })

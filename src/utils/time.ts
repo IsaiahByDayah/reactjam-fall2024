@@ -3,7 +3,7 @@ import objectSupport from "dayjs/plugin/objectSupport"
 import relativeTime from "dayjs/plugin/relativeTime"
 import updateLocale from "dayjs/plugin/updateLocale"
 
-import { IDate, ITime } from "@/utils/types"
+import { IDate, IDateTime, ITime } from "@/utils/types"
 
 dayjs.extend(relativeTime)
 dayjs.extend(objectSupport)
@@ -26,6 +26,21 @@ dayjs.updateLocale("en", {
     yy: "%d years",
   },
 })
+
+export const dateTimeIsBefore = (dateTimeA: IDateTime, dateTimeB: IDateTime) =>
+  dayjs({
+    month: dateTimeA.month,
+    day: dateTimeA.day,
+    hour: dateTimeA.hr,
+    minute: dateTimeA.min,
+  }).isBefore(
+    dayjs({
+      month: dateTimeB.month,
+      day: dateTimeB.day,
+      hour: dateTimeB.hr,
+      minute: dateTimeB.min,
+    }),
+  )
 
 export const timeFrom = (timeA: ITime, timeB: ITime) => {
   const momentA = dayjs({
