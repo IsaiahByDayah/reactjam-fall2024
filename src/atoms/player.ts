@@ -1,7 +1,11 @@
 import { atom } from "jotai"
 import { atomWithStorage } from "jotai/utils"
 
-import { createPlayerInboxAtom, recieveEmailAtom } from "@/atoms/inbox"
+import {
+  createPlayerInboxAtom,
+  deletePlayerInboxAtom,
+  recieveEmailAtom,
+} from "@/atoms/inbox"
 import { WELCOME_EMAIL } from "@/utils/data"
 import { IPlayer } from "@/utils/types"
 
@@ -33,6 +37,13 @@ export const createPlayerAtom = atom(
     })
   },
 )
+
+export const deletePlayerAtom = atom(null, (_get, set, playerId: string) => {
+  set(allPlayersAtom, (allPlayers) =>
+    allPlayers.filter((player) => player.uid !== playerId),
+  )
+  set(deletePlayerInboxAtom, playerId)
+})
 
 export const setCurrentPlayerAtom = atom(
   null,

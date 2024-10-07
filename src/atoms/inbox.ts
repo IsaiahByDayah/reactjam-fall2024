@@ -40,6 +40,14 @@ export const createPlayerInboxAtom = atom(
   },
 )
 
+export const deletePlayerInboxAtom = atom(null, (_get, set, playerId: string) =>
+  set(playerInboxesAtom, (playerInboxes) => {
+    const filteredPlayerInboxes = { ...playerInboxes }
+    delete filteredPlayerInboxes[playerId]
+    return filteredPlayerInboxes
+  }),
+)
+
 interface RecieveEmailAtomPayload {
   emailId: string
   recievedAt?: Partial<IDateTime>

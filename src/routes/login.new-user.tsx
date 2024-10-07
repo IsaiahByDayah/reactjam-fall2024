@@ -20,7 +20,7 @@ const newHireSchema = z.object({
 type NewHireSchema = z.infer<typeof newHireSchema>
 
 function NewHireForm() {
-  const addNewPlayer = useSetAtom(createPlayerAtom)
+  const createPlayer = useSetAtom(createPlayerAtom)
   const router = useRouter()
 
   const {
@@ -41,8 +41,7 @@ function NewHireForm() {
   const employeeId = parseEmployeeId(newHire)
 
   const onSubmit = (data: NewHireSchema) => {
-    console.log(data)
-    addNewPlayer(data)
+    createPlayer(data)
     router.navigate({ to: "/dashboard/inbox" })
   }
 
