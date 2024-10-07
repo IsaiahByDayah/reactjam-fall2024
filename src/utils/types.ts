@@ -17,7 +17,7 @@ export interface IContact {
   firstName: string
   lastName: string
   role: string
-  isCoworker: boolean
+  isMuySnacksEmployee: boolean
 }
 
 export interface IPlayer extends IContact {}
@@ -27,6 +27,7 @@ export interface IEmailReply {
   emailId: string
   message: ReactNode
   replyTimeMin: number
+  order?: number
 }
 
 export interface IEmailData {

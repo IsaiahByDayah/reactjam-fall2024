@@ -3,8 +3,8 @@ import { atom } from "jotai"
 import { IDate, IDateTime, ITime } from "@/utils/types"
 
 export const currentTimeAtom = atom<ITime>({
-  hr: 13,
-  min: 0,
+  hr: 18,
+  min: 44,
 })
 
 export const currentDateAtom = atom<IDate>({

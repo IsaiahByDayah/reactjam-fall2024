@@ -6,7 +6,11 @@ import {
   deletePlayerInboxAtom,
   recieveEmailAtom,
 } from "@/atoms/inbox"
-import { WELCOME_EMAIL } from "@/utils/data"
+import {
+  LUNCH_REQUEST_EMAIL,
+  PETS_EMAIL,
+  WELCOME_EMAIL,
+} from "@/utils/data/emails"
 import { IPlayer } from "@/utils/types"
 
 const PLAYER_ROLE = "Social & Influencer Marketing Associate"
@@ -24,15 +28,31 @@ export const createPlayerAtom = atom(
     const uid = crypto.randomUUID()
     set(allPlayersAtom, (allPlayers) => [
       ...allPlayers,
-      { uid, role: PLAYER_ROLE, ...newPlayer },
+      { uid, role: PLAYER_ROLE, isMuySnacksEmployee: true, ...newPlayer },
     ])
     set(currentPlayerIdAtom, uid)
     set(createPlayerInboxAtom, uid)
+
+    // Player emails
     set(recieveEmailAtom, {
       emailId: WELCOME_EMAIL.uid,
       recievedAt: {
         hr: 7,
-        min: 30,
+        min: 52,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: LUNCH_REQUEST_EMAIL.uid,
+      recievedAt: {
+        hr: 9,
+        min: 12,
+      },
+    })
+    set(recieveEmailAtom, {
+      emailId: PETS_EMAIL.uid,
+      recievedAt: {
+        hr: 9,
+        min: 33,
       },
     })
   },

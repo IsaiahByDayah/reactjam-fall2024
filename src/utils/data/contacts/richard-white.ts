@@ -5,5 +5,5 @@ export const RICHARD_WHITE: IContact = {
   firstName: "Richard",
   lastName: "White",
   role: "Chief People Officer (CPO)",
-  isCoworker: true,
+  isMuySnacksEmployee: true,
 }

@@ -5,7 +5,7 @@ import { currentPlayerIdAtom } from "@/atoms/player"
 import { advanceTimeAtom, currentDateTimeAtom } from "@/atoms/time"
 import { lookupEmail } from "@/utils/data/emails"
 import { lookupReply } from "@/utils/data/replies"
-import { dateTimeIsBefore } from "@/utils/time"
+import { dateTimeDiff, dateTimeIsBefore } from "@/utils/time"
 import { IDateTime, IInboxEmail } from "@/utils/types"
 
 export const playerInboxesAtom = atomWithStorage<{
@@ -25,7 +25,7 @@ export const currentPlayerInboxAtom = atom((get) => {
     return []
   }
 
-  return playerInbox
+  return playerInbox.sort((a, b) => dateTimeDiff(a.recievedAt, b.recievedAt))
 })
 
 export const createPlayerInboxAtom = atom(

@@ -43,22 +43,25 @@ export const EmailViewer = ({ className }: EmailViewerProps) => {
   return (
     <div className={clsx("mx-auto flex flex-col gap-10 px-4 py-10", className)}>
       <div className="prose">{currentEmail?.message}</div>
-      <ul className="border px-2 py-4">
-        {replies.map((reply) => (
-          <li
-            className={clsx(
-              "text w-full rounded px-2 py-1",
-              currentEmailEntry?.replyId === reply.uid
-                ? "bg-gray-300"
-                : "hover:bg-gray-200",
-              { "cursor-pointer": !isRepliedTo },
-            )}
-            onClick={() => handleReplyClick(reply)}
-          >
-            <span className="font-bold italic">"{reply.message}"</span> -{" "}
-            <span className="text-sm">[{reply.replyTimeMin}min]</span>
-          </li>
-        ))}
+      <ul className="flex flex-col gap-2 border px-2 py-4">
+        {replies.map((reply) => {
+          const isActiveReply =
+            isRepliedTo && currentEmailEntry?.replyId === reply.uid
+          return (
+            <li
+              className={clsx("text w-full rounded px-2 py-1", {
+                "bg-gray-100": isActiveReply,
+                "hover:bg-gray-100": !isRepliedTo,
+                "cursor-pointer": !isRepliedTo,
+                "text-gray-300": isRepliedTo && !isActiveReply,
+              })}
+              onClick={() => handleReplyClick(reply)}
+            >
+              <span className="font-bold italic">{reply.message}</span> -{" "}
+              <span className="text-sm">[{reply.replyTimeMin}min]</span>
+            </li>
+          )
+        })}
       </ul>
     </div>
   )

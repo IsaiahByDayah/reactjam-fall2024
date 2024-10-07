@@ -27,6 +27,21 @@ dayjs.updateLocale("en", {
   },
 })
 
+export const dateTimeDiff = (dateTimeA: IDateTime, dateTimeB: IDateTime) =>
+  dayjs({
+    month: dateTimeA.month,
+    day: dateTimeA.day,
+    hour: dateTimeA.hr,
+    minute: dateTimeA.min,
+  }).diff(
+    dayjs({
+      month: dateTimeB.month,
+      day: dateTimeB.day,
+      hour: dateTimeB.hr,
+      minute: dateTimeB.min,
+    }),
+  )
+
 export const dateTimeIsBefore = (dateTimeA: IDateTime, dateTimeB: IDateTime) =>
   dayjs({
     month: dateTimeA.month,

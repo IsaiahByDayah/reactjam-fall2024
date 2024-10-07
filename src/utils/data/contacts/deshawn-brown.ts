@@ -5,5 +5,5 @@ export const DESHAWN_BROWN: IContact = {
   firstName: "Deshawn",
   lastName: "Brown",
   role: "Friend",
-  isCoworker: false,
+  isMuySnacksEmployee: false,
 }
